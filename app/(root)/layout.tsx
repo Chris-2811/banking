@@ -1,4 +1,6 @@
-import '../globals.css';
+import Sidebar from "@/components/Sidebar";
+import "../globals.css";
+import Topbar from "@/components/Topbar";
 
 export default function RootLayout({
   children,
@@ -6,8 +8,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main>
-      sidebar
+    <main className="flex h-screen w-full flex-col font-sans lg:flex-row">
+      <Sidebar />
+      <Topbar />
       {children}
     </main>
   );
