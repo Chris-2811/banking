@@ -6,9 +6,20 @@ import { sidebarLinks } from "@/data";
 import { usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { logOut } from "@/lib/actions/user.actions";
+import { log } from "console";
+import { useRouter } from "next/navigation";
 
-function Sidebar() {
+function Sidebar({ user }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  async function handleLogout() {
+    await logOut();
+    router.push("/sign-in");
+  }
+
+  console.log(user);
 
   return (
     <section id="sidebar" className="hidden lg:block">
@@ -68,7 +79,12 @@ function Sidebar() {
             <p className="font-semibold leading-[1.42]">Christoph Schmid</p>
             <p>chris@gmail.com</p>
           </div>
-          <img src="icons/logout.svg" alt="" />
+          <img
+            src="icons/logout.svg"
+            alt="logout"
+            onClick={handleLogout}
+            className="cursor-pointer"
+          />
         </div>
       </div>
     </section>

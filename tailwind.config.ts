@@ -19,6 +19,9 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        "3xl": "1920px",
+      },
       colors: {
         fill: {
           100: "rgba(255, 255, 255, 0.10)",
