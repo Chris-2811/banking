@@ -26,6 +26,7 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/actions/user.actions";
 import { signUp } from "@/lib/actions/user.actions";
+import PlaidLink from "../PlaidLink";
 
 function AuthForm({ type }: { type: string }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +48,7 @@ function AuthForm({ type }: { type: string }) {
             password: "",
             firstName: "",
             lastName: "",
-            address: "",
+            address1: "",
             city: "",
             state: "",
             postalCode: "",
@@ -60,26 +61,23 @@ function AuthForm({ type }: { type: string }) {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-
     setIsLoading(true);
 
     try {
       // Sign up with appwrite
-      console.log("Type", type);
 
       if (type === "sign-up") {
         const userData = {
           email: data.email,
           password: data.password,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          name: `${data.firstName} ${data.lastName}`,
-          address: data.address,
-          city: data.city,
-          state: data.state,
-          postalCode: data.postalCode,
-          dateOfBirth: data.dateOfBirth,
-          ssn: data.ssn,
+          firstName: data.firstName!,
+          lastName: data.lastName!,
+          address1: data.address1!,
+          city: data.city!,
+          state: data.state!,
+          postalCode: data.postalCode!,
+          dateOfBirth: data.dateOfBirth!,
+          ssn: data.ssn!,
         };
 
         console.log("signUp gets called");
@@ -132,7 +130,11 @@ function AuthForm({ type }: { type: string }) {
                 : "Please enter your details."}
           </p>
         </div>
-        {!user && (
+        {user ? (
+          <div className="flex flex-col gap-4">
+            <PlaidLink user={user} variant="primary" />
+          </div>
+        ) : (
           <div>
             <div className={`mt-8 ${type === "sign-up" && "w-[460px]"}`}>
               <Form {...form}>
@@ -157,8 +159,8 @@ function AuthForm({ type }: { type: string }) {
                         />
                       </div>
                       <CustomInput
-                        placeholder="Enter your specific address"
-                        name="address"
+                        placeholder="Enter your specific address shit"
+                        name="address1"
                         label="Address"
                         control={form.control}
                       />
